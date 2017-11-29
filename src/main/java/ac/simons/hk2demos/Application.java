@@ -22,12 +22,16 @@ public class Application {
             @Override
             protected void configure() {
                 bindFactory(FooFactory.class).to(FooService.class);
-                
+                                
                 addActiveDescriptor(ContractImpl1.class);
                 addActiveDescriptor(ContractImpl2.class);
+                                
+                addActiveDescriptor(StringWriter.class);
+                addActiveDescriptor(NumberWriter.class);
                 
                 bindAsContract(BarService.class).in(Singleton.class);
                 bindAsContract(BazService.class).in(Singleton.class);
+                bindAsContract(WritingService.class).in(Singleton.class);
             }
         });
                 
@@ -36,6 +40,8 @@ public class Application {
         
         final BazService bazService = locator.getService(BazService.class);
         System.out.println(bazService.toString());
+        
+        locator.getService(WritingService.class).writeSomething();
     }
 
 }
