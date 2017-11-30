@@ -30,8 +30,11 @@ public class Application {
                 addActiveDescriptor(NumberWriter.class);
                 
                 bindAsContract(BarService.class).in(Singleton.class);
-                bindAsContract(BazService.class).in(Singleton.class);
                 bindAsContract(WritingService.class).in(Singleton.class);
+                
+                // Read information about provided type, scope etc. from factory
+                // by binding the factory as 
+                addActiveFactoryDescriptor(BazServiceFactory.class);                
             }
         });
                 
@@ -40,8 +43,10 @@ public class Application {
         
         final BazService bazService = locator.getService(BazService.class);
         System.out.println(bazService.toString());
-        
+       
         locator.getService(WritingService.class).writeSomething();
+        
+        locator.shutdown();
     }
 
 }
